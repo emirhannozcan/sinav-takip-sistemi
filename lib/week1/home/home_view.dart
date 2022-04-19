@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/week1/addexam/add_exam.dart';
+import 'package:flutter_application_1/week1/examlist/examlist.dart';
 
 // import 'package:flutter/widgets.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
-  final appBarTitle = "Todo Moon";
+  final appBarTitle = "Öğrenci Takip";
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,7 @@ class HomeView extends StatelessWidget {
           ],
         ),
       ),
+      resizeToAvoidBottomInset: false,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         // children: homeViewCards,
@@ -32,7 +34,7 @@ class HomeView extends StatelessWidget {
             // alignment: Alignment.topCenter,
             // child: addExam(),
             child: Container(
-              padding: const EdgeInsets.only(bottom: 8),
+              // padding: const EdgeInsets.only(bottom: 4),
               child: Card(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -57,18 +59,27 @@ class HomeView extends StatelessWidget {
           Expanded(
             // child: myExams(),
             child: Container(
-              padding: const EdgeInsets.only(bottom: 8),
+              // padding: const EdgeInsets.only(bottom: 4),
               child: Card(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    const ListTile(
-                      // leading: FlutterLogo(size: 56.0),
-                      leading: Icon(Icons.pending_actions),
-                      // trailing: Icon(Icons.pending_actions),
-                      title: Text('Sınavlarım'),
-                      subtitle: Text('Mevcut sınavları görüntüle'),
-                    ),
+                    ListTile(
+                        // leading: FlutterLogo(size: 56.0),
+                        leading: Icon(Icons.pending_actions),
+                        // trailing: Icon(Icons.pending_actions),
+                        title: Text('Sınavlarım'),
+                        subtitle: Text('Mevcut sınavları görüntüle'),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ExamList()),
+                          );
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => AddExam()),
+                          // );
+                        }),
                   ],
                 ),
               ),
@@ -78,7 +89,7 @@ class HomeView extends StatelessWidget {
             // alignment: Alignment.bottomCenter,
             // child: myProgress(),
             child: Container(
-              padding: const EdgeInsets.only(bottom: 8),
+              // padding: const EdgeInsets.only(bottom: 4),
               child: Card(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -100,85 +111,28 @@ class HomeView extends StatelessWidget {
               ),
             ),
           ),
+          Expanded(
+            // child: myExams(),
+            child: Container(
+              // padding: const EdgeInsets.only(bottom: 4),
+              child: Card(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    const ListTile(
+                      // leading: FlutterLogo(size: 56.0),
+                      leading: Icon(Icons.calendar_month_outlined),
+                      // trailing: Icon(Icons.pending_actions),
+                      title: Text('Çalışma Programı'),
+                      subtitle: Text('Programını yap çalışmaya başla'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 }
-
-  // List<Widget> get homeViewCards {
-  //   return <Widget>[
-  //     Expanded(
-  //       // alignment: Alignment.topCenter,
-  //       child: addExam(),
-  //     ),
-  //     Expanded(
-  //       child: myExams(),
-  //     ),
-  //     Expanded(
-  //       // alignment: Alignment.bottomCenter,
-  //       child: myProgress(),
-  //     ),
-  //   ];
-  // }
-
-  // Container myProgress() {
-  //   return Container(
-  //     padding: const EdgeInsets.only(bottom: 8),
-  //     child: Card(
-  //       child: Column(
-  //         mainAxisSize: MainAxisSize.min,
-  //         children: <Widget>[
-  //           const ListTile(
-  //             // leading: FlutterLogo(size: 56.0),
-  //             // trailing: Icon(Icons.query_stats_outlined),
-  //             leading: Icon(Icons.query_stats_outlined),
-  //             title: Text('Gelişim'),
-  //             subtitle: Text('Gelişimini gör'),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // Container myExams() {
-  //   return Container(
-  //     padding: const EdgeInsets.only(bottom: 8),
-  //     child: Card(
-  //       child: Column(
-  //         mainAxisSize: MainAxisSize.min,
-  //         children: <Widget>[
-  //           const ListTile(
-  //             // leading: FlutterLogo(size: 56.0),
-  //             leading: Icon(Icons.pending_actions),
-  //             // trailing: Icon(Icons.pending_actions),
-  //             title: Text('Sınavlarım'),
-  //             subtitle: Text('Mevcut sınavları görüntüle'),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
-//   Container addExam() {
-//     return Container(
-//       padding: const EdgeInsets.only(bottom: 8),
-//       child: Card(
-//         child: Column(
-//           mainAxisSize: MainAxisSize.min,
-//           children: <Widget>[
-//             const ListTile(
-//               // leading: FlutterLogo(size: 56.0),
-//               leading: Icon(Icons.add_box_outlined),
-//               // trailing: Icon(Icons.add_box_outlined),
-//               title: Text('Sınav Ekle'),
-//               subtitle: Text('Listeye yeni bir sınav ekle'),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
