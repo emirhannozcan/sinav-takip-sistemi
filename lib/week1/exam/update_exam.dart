@@ -3,43 +3,79 @@ import 'package:flutter_application_1/week1/dal/dbhelper.dart';
 import '../models/sinav.dart';
 import 'package:flutter/services.dart';
 
-class AddExam extends StatefulWidget {
-  const AddExam({Key? key}) : super(key: key);
+//güncelleme kısmı tekrardan kontrol edilecek
+
+class UpdateExam extends StatefulWidget {
+  late Sinav sinav;
+  // late int sinavID;
+  // UpdateExam(this.sinavID);
+  UpdateExam(this.sinav, {Key? key}) : super(key: key);
+  // const UpdateExam({Key? key, required Sinav sinav})
+  //  UpdateExam({Key? key}, this.sinav)
+  // : super(key: key); //required ve sinav kısmı silinebilir
 
   @override
-  _AddExamState createState() => _AddExamState();
+  // _UpdateExamState createState() => _UpdateExamState(sinavID);
+  _UpdateExamState createState() => _UpdateExamState(sinav);
 }
 
-class _AddExamState extends State<AddExam> {
+class _UpdateExamState extends State<UpdateExam> {
+  late Sinav sinav;
+  // late int sinavID;
+  // _UpdateExamState(this.sinavID);
+  _UpdateExamState(this.sinav);
+
   final DbHelper _dbHelper = DbHelper();
   final appBarTitle = "Sınav Ekle";
   final dogruText = "Doğru";
   final fizikTitle = "Fizik";
   final matematikTitle = "Matematik";
-  final saveText = "Kaydet";
+  final saveText = "Güncelle";
   final sosyalTitle = "Sosyal Bilgiler";
   final turkceTitle = "Türkçe";
   final yanlisText = "Yanlış";
 
-  final int? _sinavId = null;
-  final _addFormKey = GlobalKey<FormState>();
-  final _sinavAdController = TextEditingController();
-  final _fenBController = TextEditingController();
-  final _fenDController = TextEditingController();
-  final _fenYController = TextEditingController();
-  final _matBController = TextEditingController();
-  final _matDController = TextEditingController();
-  final _matYController = TextEditingController();
-  final _sosBController = TextEditingController();
-  final _sosDController = TextEditingController();
-  final _sosYController = TextEditingController();
-  final _turBController = TextEditingController();
-  final _turDController = TextEditingController();
-  final _turYController = TextEditingController();
+  var _sinavId = null;
+  var _addFormKey = GlobalKey<FormState>();
+  var _sinavAdController = TextEditingController();
+  var _fenBController = TextEditingController();
+  var _fenDController = TextEditingController();
+  var _fenYController = TextEditingController();
+  var _matBController = TextEditingController();
+  var _matDController = TextEditingController();
+  var _matYController = TextEditingController();
+  var _sosBController = TextEditingController();
+  var _sosDController = TextEditingController();
+  var _sosYController = TextEditingController();
+  var _turBController = TextEditingController();
+  var _turDController = TextEditingController();
+  var _turYController = TextEditingController();
 
-  void _addExam(Sinav sinav) async {
-    await _dbHelper.insert(sinav);
+  void _UpdateExam(Sinav sinav) async {
+    await _dbHelper.update(sinav);
     print("tamamlandı");
+  }
+
+  @override
+  void initState() {
+    _sinavId = sinav.id;
+    // print(sinav.id);
+    // print(_sinavId);
+    _sinavAdController.text = sinav.sinavAd;
+    _fenBController.text = sinav.fenB.toString();
+    _fenDController.text = sinav.fenD.toString();
+    _fenYController.text = sinav.fenY.toString();
+    _matBController.text = sinav.matB.toString();
+    _matDController.text = sinav.matD.toString();
+    _matYController.text = sinav.matY.toString();
+    _sosBController.text = sinav.sosB.toString();
+    _sosDController.text = sinav.sosD.toString();
+    _sosYController.text = sinav.sosY.toString();
+    _turBController.text = sinav.turB.toString();
+    _turDController.text = sinav.turD.toString();
+    _turYController.text = sinav.turY.toString();
+
+    super.initState();
   }
 
   @override
@@ -523,7 +559,7 @@ class _AddExamState extends State<AddExam> {
                                 onPressed: () {
                                   if (_addFormKey.currentState!.validate()) {
                                     //kontrol gerekebilir
-                                    _addExam(Sinav(
+                                    _UpdateExam(Sinav(
                                         _sinavId,
                                         _sinavAdController.text,
                                         int.parse(_matDController.text),
@@ -562,7 +598,7 @@ class _AddExamState extends State<AddExam> {
                                     // );
                                   }
                                 },
-                                child: Text('Kaydet',
+                                child: Text(saveText,
                                     style: TextStyle(color: Colors.white)),
                                 // color: Colors.blue,
                               )

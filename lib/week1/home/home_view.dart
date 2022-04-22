@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/week1/addexam/add_exam.dart';
+import 'package:flutter_application_1/week1/exam/add_exam.dart';
 import 'package:flutter_application_1/week1/examlist/examlist.dart';
 
 // import 'package:flutter/widgets.dart';

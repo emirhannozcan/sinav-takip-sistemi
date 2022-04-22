@@ -66,8 +66,12 @@ class DbHelper {
 
   Future<int> update(Sinav sinav) async {
     Database? db = await this.db;
+    var id = sinav.id; //silinebilir
     var result = await db!.update("$_sinavTablo", sinav.toMap(),
-        where: "id=?", whereArgs: [sinav.id]);
+        // where: "id=?", whereArgs: [sinav.id]); //test et
+        where: "id=$id"); //test et çalışmazsa yukarıdaki kodu dene
+
+    print(sinav.sinavAd);
     return result;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/week1/dal/dbhelper.dart';
+import 'package:flutter_application_1/week1/exam/update_exam.dart';
 
 import '../models/sinav.dart';
 
@@ -35,15 +36,22 @@ class _ExamListState extends State<ExamList> {
     await notesFuture.then((data) {
       setState(() {
         sinavList = data;
+        print("girdi");
       });
     });
   }
 
   @override
   void initState() {
-    super.initState();
+    print("initState");
     getExams();
+    super.initState();
   }
+
+  // @override
+  //   void setState() {
+  //     resultCities=filteredCities;
+  //   }
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +61,11 @@ class _ExamListState extends State<ExamList> {
         ),
         body: Container(
             child: Column(children: <Widget>[
-          Form(
-              key: _formKey,
-              child: Column(children: <Widget>[
-                buildForm(_sinavAdController, "Sınav Ad"),
-              ])),
+          // Form(
+          //     key: _formKey,
+          //     child: Column(children: <Widget>[
+          //       buildForm(_sinavAdController, "Sınav Ad"),
+          //     ])),
           Expanded(
               child: ListView.builder(
                   itemCount: sinavList?.length ?? 0,
@@ -65,18 +73,29 @@ class _ExamListState extends State<ExamList> {
                     return Card(
                         child: ListTile(
                             onTap: () {
-                              setState(() {
-                                _sinavAdController.text =
-                                    sinavList![index].sinavAd;
-                                // _controllerDesc.text = allNotes[index].description;
-                                sinavId = sinavList![index].id;
-                              });
+                              //güncelleme kısmı burada olacak
+                              // UpdateExam(sinavList![index].id!)),
+                              // .then((value) => setState(() {}));
+                              Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              UpdateExam(sinavList![index])))
+                                  .then((value) => setState(() {
+                                        getExams();
+                                      }));
+                              // setState(() {
+                              //   _sinavAdController.text =
+                              //       sinavList![index].sinavAd;
+                              //   // _controllerDesc.text = allNotes[index].description;
+                              //   sinavId = sinavList![index].id;
+                              // });
                             },
                             title: Text(sinavList![index].sinavAd),
                             // subtitle: Text(sinavList[index].description),
                             trailing: GestureDetector(
                               onTap: () {
-                                // _deleteNote(allNotes[index].id, index);
+                                _deleteExam(sinavList![index].id!);
                               },
                               child: Icon(Icons.delete),
                             )));
@@ -84,13 +103,21 @@ class _ExamListState extends State<ExamList> {
         ])));
   }
 
-  Widget buildForm(TextEditingController txtController, String str) {
-    return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: TextFormField(
-            autofocus: false,
-            controller: txtController,
-            decoration:
-                InputDecoration(labelText: str, border: OutlineInputBorder())));
+  // Widget buildForm(TextEditingController txtController, String str) {
+  //   return Padding(
+  //       padding: const EdgeInsets.all(8.0),
+  //       child: TextFormField(
+  //           autofocus: false,
+  //           controller: txtController,
+  //           decoration:
+  //               InputDecoration(labelText: str, border: OutlineInputBorder())));
+  // }
+
+  void _deleteExam(int deletedNoteId) async {
+    await _dbHelper.delete(deletedNoteId);
+
+    setState(() {
+      getExams();
+    });
   }
 }
