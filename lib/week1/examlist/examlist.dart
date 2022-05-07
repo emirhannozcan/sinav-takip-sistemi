@@ -84,6 +84,7 @@ class _ExamListState extends State<ExamList> {
                                   .then((value) => setState(() {
                                         getExams();
                                       }));
+
                               // setState(() {
                               //   _sinavAdController.text =
                               //       sinavList![index].sinavAd;
