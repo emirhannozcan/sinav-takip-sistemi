@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/week1/charts/single_chart.dart';
 import 'package:flutter_application_1/week1/dal/dbhelper.dart';
 import 'package:flutter_application_1/week1/exam/update_exam.dart';
 
@@ -15,21 +16,21 @@ class _ExamListState extends State<ExamList> {
   final DbHelper _dbHelper = DbHelper();
   List<Sinav>? sinavList;
 
-  final _formKey = GlobalKey<FormState>();
+  // final _formKey = GlobalKey<FormState>();
   late int? sinavId;
-  final _sinavAdController = TextEditingController();
-  final _fenBController = TextEditingController();
-  final _fenDController = TextEditingController();
-  final _fenYController = TextEditingController();
-  final _matBController = TextEditingController();
-  final _matDController = TextEditingController();
-  final _matYController = TextEditingController();
-  final _sosBController = TextEditingController();
-  final _sosDController = TextEditingController();
-  final _sosYController = TextEditingController();
-  final _turBController = TextEditingController();
-  final _turDController = TextEditingController();
-  final _turYController = TextEditingController();
+  // final _sinavAdController = TextEditingController();
+  // final _fenBController = TextEditingController();
+  // final _fenDController = TextEditingController();
+  // final _fenYController = TextEditingController();
+  // final _matBController = TextEditingController();
+  // final _matDController = TextEditingController();
+  // final _matYController = TextEditingController();
+  // final _sosBController = TextEditingController();
+  // final _sosDController = TextEditingController();
+  // final _sosYController = TextEditingController();
+  // final _turBController = TextEditingController();
+  // final _turDController = TextEditingController();
+  // final _turYController = TextEditingController();
 
   void getExams() async {
     var notesFuture = _dbHelper.getAllExams();
@@ -72,34 +73,58 @@ class _ExamListState extends State<ExamList> {
                   itemBuilder: (context, index) {
                     return Card(
                         child: ListTile(
-                            onTap: () {
-                              //güncelleme kısmı burada olacak
-                              // UpdateExam(sinavList![index].id!)),
-                              // .then((value) => setState(() {}));
-                              Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              UpdateExam(sinavList![index])))
-                                  .then((value) => setState(() {
-                                        getExams();
-                                      }));
+                      leading: Icon(Icons.pending_actions),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  SingleChart(sinavList![index])),
+                        );
+                        //güncelleme kısmı burada olacak
+                        // UpdateExam(sinavList![index].id!)),
+                        // .then((value) => setState(() {}));
+                        // Navigator.push(
+                        //         context,
+                        //         MaterialPageRoute(
+                        //             builder: (context) =>
+                        //                 UpdateExam(sinavList![index])))
+                        //     .then((value) => setState(() {
+                        //           getExams();
+                        //         }));
 
-                              // setState(() {
-                              //   _sinavAdController.text =
-                              //       sinavList![index].sinavAd;
-                              //   // _controllerDesc.text = allNotes[index].description;
-                              //   sinavId = sinavList![index].id;
-                              // });
-                            },
-                            title: Text(sinavList![index].sinavAd),
-                            // subtitle: Text(sinavList[index].description),
-                            trailing: GestureDetector(
-                              onTap: () {
+                        //single_chart burada kullanılacak
+                      },
+                      title: Text(sinavList![index].sinavAd),
+                      // subtitle: Text(sinavList[index].description),
+                      // trailing: GestureDetector(
+                      //   onTap: () {
+                      //     _deleteExam(sinavList![index].id!);
+                      //   },
+                      //   child: Icon(Icons.delete),
+                      // )
+                      trailing: Wrap(
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => UpdateExam(
+                                            sinavList![index]))).then((value) =>
+                                    setState(() {
+                                      getExams();
+                                    })); //navigate to edit page, pass student roll no to edit
+                              },
+                              icon: Icon(Icons.edit)),
+                          IconButton(
+                              onPressed: () async {
                                 _deleteExam(sinavList![index].id!);
                               },
-                              child: Icon(Icons.delete),
-                            )));
+                              icon: Icon(Icons.delete, color: Colors.red))
+                        ],
+                      ),
+                    ));
                   }))
         ])));
   }

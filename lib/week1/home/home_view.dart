@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/week1/charts/deneme_charts.dart';
+import 'package:flutter_application_1/week1/charts/multiple_charts.dart';
 import 'package:flutter_application_1/week1/exam/add_exam.dart';
 import 'package:flutter_application_1/week1/examlist/examlist.dart';
+
+import '../charts/deneme2.dart';
 
 // import 'package:flutter/widgets.dart';
 
@@ -66,7 +70,7 @@ class HomeView extends StatelessWidget {
                   children: <Widget>[
                     ListTile(
                         // leading: FlutterLogo(size: 56.0),
-                        leading: Icon(Icons.pending_actions),
+                        leading: Icon(Icons.list_alt_outlined),
                         // trailing: Icon(Icons.pending_actions),
                         title: Text('Sınavlarım'),
                         subtitle: Text('Mevcut sınavları görüntüle'),
@@ -103,7 +107,12 @@ class HomeView extends StatelessWidget {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => AddExam()),
+                            MaterialPageRoute(
+                                builder: (context) => MultipleChart()),
+                            // builder: (context) => DenemeChart()),
+                            // builder: (context) => DenemChartes(
+                            //       title: 'kalem',
+                            //     )),
                           );
                         }),
                   ],

@@ -26,7 +26,7 @@ class _UpdateExamState extends State<UpdateExam> {
   _UpdateExamState(this.sinav);
 
   final DbHelper _dbHelper = DbHelper();
-  final appBarTitle = "Sınav Ekle";
+  final appBarTitle = "Sınav Güncelle";
   final dogruText = "Doğru";
   final fizikTitle = "Fizik";
   final matematikTitle = "Matematik";
@@ -35,6 +35,7 @@ class _UpdateExamState extends State<UpdateExam> {
   final turkceTitle = "Türkçe";
   final yanlisText = "Yanlış";
 
+  //var yerine final kullan
   var _sinavId = null;
   var _addFormKey = GlobalKey<FormState>();
   var _sinavAdController = TextEditingController();
@@ -87,7 +88,7 @@ class _UpdateExamState extends State<UpdateExam> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.add_box_outlined),
+            Icon(Icons.change_circle_outlined),
             Text(appBarTitle,
                 style: Theme.of(context).primaryTextTheme.headline5)
           ],
@@ -108,7 +109,7 @@ class _UpdateExamState extends State<UpdateExam> {
                           margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                           child: Column(
                             children: <Widget>[
-                              Text('Sınav Ekle'),
+                              Text('Sınav Adı'),
                               TextFormField(
                                 maxLength: 10,
                                 controller: _sinavAdController,

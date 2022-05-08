@@ -72,7 +72,7 @@ class _AddExamState extends State<AddExam> {
                           margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                           child: Column(
                             children: <Widget>[
-                              Text('Sınav Ekle'),
+                              Text('Sınav Adı'),
                               TextFormField(
                                 maxLength: 10,
                                 controller: _sinavAdController,
