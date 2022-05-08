@@ -46,21 +46,21 @@ class _SingleChartState extends State<SingleChart> {
   }
 
   List<charts.Series<LessonStats, String>> _fillData() {
-    final mat = [
+    final correctData = [
       LessonStats('Matematik', sinav.matD),
       LessonStats('Türkçe', sinav.turD),
       LessonStats('Fen Bilgisi', sinav.fenD),
       LessonStats('Sosyal', sinav.sosD),
     ];
 
-    final tur = [
+    final wrongData = [
       LessonStats('Matematik', sinav.matY),
       LessonStats('Türkçe', sinav.turY),
       LessonStats('Fen Bilgisi', sinav.fenY),
       LessonStats('Sosyal', sinav.sosY),
     ];
 
-    final fen = [
+    final emptyData = [
       LessonStats('Matematik', sinav.matB),
       LessonStats('Türkçe', sinav.turB),
       LessonStats('Fen Bilgisi', sinav.fenB),
@@ -72,19 +72,19 @@ class _SingleChartState extends State<SingleChart> {
           id: 'correct',
           domainFn: (LessonStats lesson, _) => lesson.name,
           measureFn: (LessonStats lesson, _) => lesson.number,
-          data: mat,
+          data: correctData,
           colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault),
       charts.Series<LessonStats, String>(
           id: 'wrong',
           domainFn: (LessonStats lesson, _) => lesson.name,
           measureFn: (LessonStats lesson, _) => lesson.number,
-          data: tur,
+          data: wrongData,
           colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault),
       charts.Series<LessonStats, String>(
           id: 'empty',
           domainFn: (LessonStats lesson, _) => lesson.name,
           measureFn: (LessonStats lesson, _) => lesson.number,
-          data: fen,
+          data: emptyData,
           colorFn: (_, __) => charts.MaterialPalette.gray.shadeDefault),
     ];
   }

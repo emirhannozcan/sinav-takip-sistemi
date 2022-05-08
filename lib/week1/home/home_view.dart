@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/week1/charts/deneme_charts.dart';
 import 'package:flutter_application_1/week1/charts/multiple_charts.dart';
 import 'package:flutter_application_1/week1/exam/add_exam.dart';
 import 'package:flutter_application_1/week1/examlist/examlist.dart';
-
-import '../charts/deneme2.dart';
-
-// import 'package:flutter/widgets.dart';
+import 'package:flutter_application_1/week1/motivation/motivation.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -109,10 +105,6 @@ class HomeView extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => MultipleChart()),
-                            // builder: (context) => DenemeChart()),
-                            // builder: (context) => DenemChartes(
-                            //       title: 'kalem',
-                            //     )),
                           );
                         }),
                   ],
@@ -128,13 +120,20 @@ class HomeView extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    const ListTile(
-                      // leading: FlutterLogo(size: 56.0),
-                      leading: Icon(Icons.calendar_month_outlined),
-                      // trailing: Icon(Icons.pending_actions),
-                      title: Text('Çalışma Programı'),
-                      subtitle: Text('Programını yap çalışmaya başla'),
-                    ),
+                    ListTile(
+                        // leading: FlutterLogo(size: 56.0),
+                        leading: Icon(Icons.battery_charging_full_rounded),
+                        // trailing: Icon(Icons.pending_actions),
+                        title: Text('Motive Ol'),
+                        subtitle:
+                            Text('İhtiyaç duyduğun anda motivasyonunu sağla'),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Motivation()),
+                          );
+                        }),
                   ],
                 ),
               ),
