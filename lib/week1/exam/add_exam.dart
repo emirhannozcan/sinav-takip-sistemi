@@ -13,11 +13,12 @@ class AddExam extends StatefulWidget {
 class _AddExamState extends State<AddExam> {
   final DbHelper _dbHelper = DbHelper();
   final appBarTitle = "Sınav Ekle";
+  final sinavAdTitle = "Sınav Adı";
   final dogruText = "Doğru";
-  final fizikTitle = "Fizik";
+  final fenTitle = "Fen";
   final matematikTitle = "Matematik";
   final saveText = "Kaydet";
-  final sosyalTitle = "Sosyal Bilgiler";
+  final sosyalTitle = "Sosyal";
   final turkceTitle = "Türkçe";
   final yanlisText = "Yanlış";
 
@@ -39,7 +40,6 @@ class _AddExamState extends State<AddExam> {
 
   void _addExam(Sinav sinav) async {
     await _dbHelper.insert(sinav);
-    print("tamamlandı");
   }
 
   @override
@@ -51,7 +51,7 @@ class _AddExamState extends State<AddExam> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.add_box_outlined),
+            const Icon(Icons.add_box_outlined),
             Text(appBarTitle,
                 style: Theme.of(context).primaryTextTheme.headline5)
           ],
@@ -61,25 +61,25 @@ class _AddExamState extends State<AddExam> {
         key: _addFormKey,
         child: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
             child: Card(
                 child: Container(
-                    padding: EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     width: 440,
                     child: Column(
                       children: <Widget>[
                         Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                          margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                           child: Column(
                             children: <Widget>[
-                              Text('Sınav Ekle'),
+                              Text(sinavAdTitle),
                               TextFormField(
                                 maxLength: 10,
                                 controller: _sinavAdController,
-                                decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    labelText: 'Sınav Adı',
-                                    hintText: 'Sınav Adı',
+                                decoration: InputDecoration(
+                                    border: const OutlineInputBorder(),
+                                    labelText: sinavAdTitle,
+                                    hintText: sinavAdTitle,
                                     counterText: ""),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -92,437 +92,25 @@ class _AddExamState extends State<AddExam> {
                             ],
                           ),
                         ),
-                        Text('Matematik'),
+                        Text(matematikTitle),
+                        _commonContainer(
+                            _matDController, _matYController, _matBController),
+                        Text(turkceTitle),
+                        _commonContainer(
+                            _turDController, _turYController, _turBController),
+                        Text(fenTitle),
+                        _commonContainer(
+                            _fenDController, _fenYController, _fenBController),
+                        Text(sosyalTitle),
+                        _commonContainer(
+                            _sosDController, _sosYController, _sosBController),
                         Container(
                           margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                          child: Row(
-                            children: <Widget>[
-                              Flexible(
-                                child: TextFormField(
-                                  maxLength: 2,
-                                  controller: _matDController,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
-                                  decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: dogruText,
-                                      counterText: ""
-                                      // hintText: dogruText,
-                                      ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Değer gir';
-                                    } else if (int.parse(value) > 40) {
-                                      return "max 40";
-                                    } else if (_matYController
-                                            .text.isNotEmpty &&
-                                        (int.parse(value) +
-                                                int.parse(
-                                                    _matYController.text)) >
-                                            40) {
-                                      return "Gözden geçir";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  onChanged: (value) {
-                                    if (_matYController.text.isNotEmpty &&
-                                        _matYController.text.isNotEmpty) {
-                                      _matBController.text = (40 -
-                                              (int.parse(_matDController.text) +
-                                                  int.parse(
-                                                      _matYController.text)))
-                                          .toString();
-                                    }
-                                  },
-                                ),
-                              ),
-                              Flexible(
-                                child: TextFormField(
-                                  maxLength: 2,
-                                  controller: _matYController,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
-                                  decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: yanlisText,
-                                      counterText: ""
-                                      // hintText: yanlisText,
-                                      ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Değer gir';
-                                    } else if (int.parse(value) > 40) {
-                                      return "max 40";
-                                    } else if (_matDController
-                                            .text.isNotEmpty &&
-                                        (int.parse(value) +
-                                                int.parse(
-                                                    _matDController.text)) >
-                                            40) {
-                                      return "Gözden geçir";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  onChanged: (value) {
-                                    if (_matDController.text.isNotEmpty &&
-                                        value.isNotEmpty) {
-                                      _matBController.text = (40 -
-                                              (int.parse(_matDController.text) +
-                                                  int.parse(
-                                                      _matYController.text)))
-                                          .toString();
-                                    }
-                                  },
-                                ),
-                              ),
-                              Flexible(
-                                child: TextFormField(
-                                  // enabled: false,
-                                  readOnly: true,
-                                  controller: _matBController,
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    // labelText: 'Boş',
-                                    hintText: 'Boş',
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Text('Türkçe'),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                          child: Row(
-                            children: <Widget>[
-                              Flexible(
-                                child: TextFormField(
-                                  maxLength: 2,
-                                  controller: _turDController,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
-                                  decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: dogruText,
-                                      counterText: ""
-                                      // hintText: dogruText,
-                                      ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Değer gir';
-                                    } else if (int.parse(value) > 40) {
-                                      return "max 40";
-                                    } else if (_turYController
-                                            .text.isNotEmpty &&
-                                        (int.parse(value) +
-                                                int.parse(
-                                                    _turYController.text)) >
-                                            40) {
-                                      return "Gözden geçir";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  onChanged: (value) {
-                                    if (_turDController.text.isNotEmpty &&
-                                        _turYController.text.isNotEmpty) {
-                                      _turBController.text = (40 -
-                                              (int.parse(_turDController.text) +
-                                                  int.parse(
-                                                      _turYController.text)))
-                                          .toString();
-                                    }
-                                  },
-                                ),
-                              ),
-                              Flexible(
-                                child: TextFormField(
-                                  maxLength: 2,
-                                  controller: _turYController,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
-                                  decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: yanlisText,
-                                      counterText: ""
-                                      // hintText: yanlisText,
-                                      ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Değer gir';
-                                    } else if (int.parse(value) > 40) {
-                                      return "max 40";
-                                    } else if (_turDController
-                                            .text.isNotEmpty &&
-                                        (int.parse(value) +
-                                                int.parse(
-                                                    _turDController.text)) >
-                                            40) {
-                                      return "Gözden geçir";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  onChanged: (value) {
-                                    if (int.parse(_turDController.text) !=
-                                            null &&
-                                        int.parse(_turYController.text) !=
-                                            null) {
-                                      _turBController.text = (40 -
-                                              (int.parse(_turDController.text) +
-                                                  int.parse(
-                                                      _turYController.text)))
-                                          .toString();
-                                    }
-                                  },
-                                ),
-                              ),
-                              Flexible(
-                                child: TextFormField(
-                                  // enabled: false,
-                                  readOnly: true,
-                                  controller: _turBController,
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    // labelText: 'Boş',
-                                    hintText: 'Boş',
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Text('Fen'),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                          child: Row(
-                            children: <Widget>[
-                              Flexible(
-                                child: TextFormField(
-                                  maxLength: 2,
-                                  controller: _fenDController,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
-                                  decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: dogruText,
-                                      counterText: ""
-                                      // hintText: dogruText,
-                                      ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Değer gir';
-                                    } else if (int.parse(value) > 40) {
-                                      return "max 40";
-                                    } else if (_fenYController
-                                            .text.isNotEmpty &&
-                                        (int.parse(value) +
-                                                int.parse(
-                                                    _fenYController.text)) >
-                                            40) {
-                                      return "Gözden geçir";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  onChanged: (value) {
-                                    if (_fenDController.text.isNotEmpty &&
-                                        _fenYController.text.isNotEmpty) {
-                                      _fenBController.text = (40 -
-                                              (int.parse(_fenDController.text) +
-                                                  int.parse(
-                                                      _fenYController.text)))
-                                          .toString();
-                                    }
-                                  },
-                                ),
-                              ),
-                              Flexible(
-                                child: TextFormField(
-                                  maxLength: 2,
-                                  controller: _fenYController,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
-                                  decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: yanlisText,
-                                      counterText: ""
-                                      // hintText: yanlisText,
-                                      ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Değer gir';
-                                    } else if (int.parse(value) > 40) {
-                                      return "max 40";
-                                    } else if (_fenDController
-                                            .text.isNotEmpty &&
-                                        (int.parse(value) +
-                                                int.parse(
-                                                    _fenDController.text)) >
-                                            40) {
-                                      return "Gözden geçir";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  onChanged: (value) {
-                                    if (_fenDController.text.isNotEmpty &&
-                                        _fenYController.text.isNotEmpty) {
-                                      _fenBController.text = (40 -
-                                              (int.parse(_fenDController.text) +
-                                                  int.parse(
-                                                      _fenYController.text)))
-                                          .toString();
-                                    }
-                                  },
-                                ),
-                              ),
-                              Flexible(
-                                child: TextFormField(
-                                  // enabled: false,
-                                  readOnly: true,
-                                  controller: _fenBController,
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    // labelText: 'Boş',
-                                    hintText: 'Boş',
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Text('Sosyal'),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                          child: Row(
-                            children: <Widget>[
-                              Flexible(
-                                child: TextFormField(
-                                  maxLength: 2,
-                                  controller: _sosDController,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
-                                  decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: dogruText,
-                                      counterText: ""
-                                      // hintText: dogruText,
-                                      ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Değer gir';
-                                    } else if (int.parse(value) > 40) {
-                                      return "max 40";
-                                    } else if (_sosYController
-                                            .text.isNotEmpty &&
-                                        (int.parse(value) +
-                                                int.parse(
-                                                    _sosYController.text)) >
-                                            40) {
-                                      return "Gözden geçir";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  onChanged: (value) {
-                                    if (_sosDController.text.isNotEmpty &&
-                                        _sosYController.text.isNotEmpty) {
-                                      _sosBController.text = (40 -
-                                              (int.parse(_sosDController.text) +
-                                                  int.parse(
-                                                      _sosYController.text)))
-                                          .toString();
-                                    }
-                                  },
-                                ),
-                              ),
-                              Flexible(
-                                child: TextFormField(
-                                  maxLength: 2,
-                                  controller: _sosYController,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
-                                  decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: yanlisText,
-                                      counterText: ""
-                                      // hintText: yanlisText,
-                                      ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Değer gir';
-                                    } else if (int.parse(value) > 40) {
-                                      return "max 40";
-                                    } else if (_sosDController
-                                            .text.isNotEmpty &&
-                                        (int.parse(value) +
-                                                int.parse(
-                                                    _sosDController.text)) >
-                                            40) {
-                                      return "Gözden geçir";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  onChanged: (value) {
-                                    if (_sosDController.text.isNotEmpty &&
-                                        _sosYController.text.isNotEmpty) {
-                                      _sosBController.text = (40 -
-                                              (int.parse(_sosDController.text) +
-                                                  int.parse(
-                                                      _sosYController.text)))
-                                          .toString();
-                                    }
-                                  },
-                                ),
-                              ),
-                              Flexible(
-                                child: TextFormField(
-                                  // enabled: false,
-                                  readOnly: true,
-                                  controller: _sosBController,
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    // labelText: 'Boş',
-                                    hintText: 'Boş',
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                           child: Column(
                             children: <Widget>[
                               ElevatedButton(
-                                // splashColor: Colors.red,
                                 onPressed: () {
                                   if (_addFormKey.currentState!.validate()) {
-                                    //kontrol gerekebilir
                                     _addExam(Sinav(
                                         _sinavId,
                                         _sinavAdController.text,
@@ -538,33 +126,12 @@ class _AddExamState extends State<AddExam> {
                                         int.parse(_sosDController.text),
                                         int.parse(_sosYController.text),
                                         int.parse(_sosBController.text)));
-
-                                    // _addFormKey.currentState.save();
-                                    // api.createCase(Cases(
-                                    //     name: _nameController.text,
-                                    //     gender: gender,
-                                    //     age: int.parse(_ageController.text),
-                                    //     address: _addressController.text,
-                                    //     city: _cityController.text,
-                                    //     country: _countryController.text,
-                                    //     status: status));
-
                                     Navigator.pop(context);
-
-                                    // alertDialog(
-                                    //   context,
-                                    // );
-
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //       builder: (context) => AddLesson()),
-                                    // );
                                   }
                                 },
                                 child: Text(saveText,
-                                    style: TextStyle(color: Colors.white)),
-                                // color: Colors.blue,
+                                    style:
+                                        const TextStyle(color: Colors.white)),
                               )
                             ],
                           ),
@@ -576,23 +143,79 @@ class _AddExamState extends State<AddExam> {
       ),
     );
   }
-}
 
-Future alertDialog(BuildContext context) {
-  return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Done'),
-          content: Text('Add Success'),
-          actions: <Widget>[
-            ElevatedButton(
-              child: Text('Ok'),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        );
-      });
+  Container _commonContainer(TextEditingController correct,
+      TextEditingController wrong, TextEditingController empty) {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+      child: Row(
+        children: <Widget>[
+          Flexible(
+            child: _commonTextFormField(correct, wrong, empty, dogruText),
+          ),
+          Flexible(
+            child: _commonTextFormField(wrong, correct, empty, yanlisText),
+          ),
+          Flexible(
+            child: _commonEmptyTextFormFiled(empty),
+          )
+        ],
+      ),
+    );
+  }
+
+  TextFormField _commonEmptyTextFormFiled(TextEditingController empty) {
+    return TextFormField(
+        readOnly: true,
+        controller: empty,
+        keyboardType: TextInputType.number,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          hintText: 'Boş',
+        ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return '';
+          } else if (int.parse(value) < 0) {
+            return "Gözden geçir";
+          } else {
+            return null;
+          }
+        });
+  }
+
+  TextFormField _commonTextFormField(
+      TextEditingController first,
+      TextEditingController second,
+      TextEditingController empty,
+      String labelText) {
+    return TextFormField(
+      maxLength: 2,
+      controller: first,
+      keyboardType: TextInputType.number,
+      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+      decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          labelText: labelText,
+          counterText: ""),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Değer gir';
+        } else if (int.parse(value) > 40) {
+          return "max 40";
+        } else if (second.text.isNotEmpty &&
+            (int.parse(value) + int.parse(second.text)) > 40) {
+          return "Gözden geçir";
+        } else {
+          return null;
+        }
+      },
+      onChanged: (value) {
+        if (second.text.isNotEmpty && first.text.isNotEmpty) {
+          empty.text = (40 - (int.parse(second.text) + int.parse(first.text)))
+              .toString();
+        }
+      },
+    );
+  }
 }
