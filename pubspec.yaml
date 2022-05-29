@@ -39,6 +39,9 @@ dependencies:
   charts_flutter: ^0.12.0
   syncfusion_flutter_calendar: ^20.1.52
   time_planner: ^0.0.4
+  photo_view: ^0.10.2
+  getwidget: ^2.0.5
+  flutter_image_slideshow: ^0.1.2
 
 dev_dependencies:
 
@@ -65,8 +68,12 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/ambiance.jpg
     - assets/images/road.jpg
+    - assets/images/resim1.png
+    - assets/images/resim2.png
+    - assets/images/resim3.png
+    - assets/images/resim4.png
+    - assets/images/resim5.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

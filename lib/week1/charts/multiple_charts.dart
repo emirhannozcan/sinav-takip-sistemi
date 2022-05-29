@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../dal/dbhelper.dart';
+import '../models/lesson_stats.dart';
 import '../models/sinav.dart';
 
 class MultipleChart extends StatefulWidget {
@@ -84,10 +85,4 @@ class _MultipleChartState extends State<MultipleChart> {
       ),
     ));
   }
-}
-
-class LessonStats {
-  late String sinavAd;
-  late int number;
-  LessonStats(this.sinavAd, this.number);
 }

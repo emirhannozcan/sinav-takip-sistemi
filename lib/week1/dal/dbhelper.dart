@@ -1,12 +1,9 @@
 import 'dart:async';
-
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-
 import '../models/sinav.dart';
 
 class DbHelper {
-  // static late Database _db;
   static Database? _db;
   final String _sinavTablo = "exams";
   final String _id = "id";
@@ -30,8 +27,6 @@ class DbHelper {
     }
     return _db;
   }
-
-  // Future<Database> get db async => _db ??= await initializeDb();
 
   Future<Database> initializeDb() async {
     String dbPath = join(await getDatabasesPath(), "etrade.db");
@@ -66,12 +61,9 @@ class DbHelper {
 
   Future<int> update(Sinav sinav) async {
     Database? db = await this.db;
-    var id = sinav.id; //silinebilir
-    var result = await db!.update("$_sinavTablo", sinav.toMap(),
-        // where: "id=?", whereArgs: [sinav.id]); //test et
-        where: "id=$id"); //test et çalışmazsa yukarıdaki kodu dene
-
-    print(sinav.sinavAd);
+    var id = sinav.id;
+    var result =
+        await db!.update("$_sinavTablo", sinav.toMap(), where: "id=$id");
     return result;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import '../models/lesson_stats.dart';
 import '../models/sinav.dart';
 
 class SingleChart extends StatefulWidget {
@@ -70,28 +71,22 @@ class _SingleChartState extends State<SingleChart> {
     return [
       charts.Series<LessonStats, String>(
           id: 'correct',
-          domainFn: (LessonStats lesson, _) => lesson.name,
+          domainFn: (LessonStats lesson, _) => lesson.sinavAd,
           measureFn: (LessonStats lesson, _) => lesson.number,
           data: correctData,
           colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault),
       charts.Series<LessonStats, String>(
           id: 'wrong',
-          domainFn: (LessonStats lesson, _) => lesson.name,
+          domainFn: (LessonStats lesson, _) => lesson.sinavAd,
           measureFn: (LessonStats lesson, _) => lesson.number,
           data: wrongData,
           colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault),
       charts.Series<LessonStats, String>(
           id: 'empty',
-          domainFn: (LessonStats lesson, _) => lesson.name,
+          domainFn: (LessonStats lesson, _) => lesson.sinavAd,
           measureFn: (LessonStats lesson, _) => lesson.number,
           data: emptyData,
           colorFn: (_, __) => charts.MaterialPalette.gray.shadeDefault),
     ];
   }
-}
-
-class LessonStats {
-  late String name;
-  late int number;
-  LessonStats(this.name, this.number);
 }
